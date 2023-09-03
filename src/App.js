@@ -1,23 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+import LoginForm from "./components/Login";
+import UserProfile from "./components/UserProfile";
 
 function App() {
+  // Initialize accessToken state with an empty string
+  const [accessToken, setAccessToken] = useState("");
+
+  // Callback function to update accessToken when a user logs in
+  const handleLogin = (token) => {
+    setAccessToken(token); // Update accessToken state
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>React Login App</h1>
+      <LoginForm onLogin={handleLogin} />
+      {accessToken && <UserProfile accessToken={accessToken} />}
     </div>
   );
 }
