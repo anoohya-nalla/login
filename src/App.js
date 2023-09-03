@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./App.css";
 import LoginForm from "./components/Login";
 import UserProfile from "./components/UserProfile";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   // Initialize accessToken state with an empty string
@@ -14,9 +16,9 @@ function App() {
 
   return (
     <div className="App">
-      <h1>React Login App</h1>
       <LoginForm onLogin={handleLogin} />
       {accessToken && <UserProfile accessToken={accessToken} />}
+      <ToastContainer />
     </div>
   );
 }

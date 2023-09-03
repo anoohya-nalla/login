@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
+import { toast } from "react-toastify"; // Import toast from react-toastify
+import "react-toastify/dist/ReactToastify.css"; // Import the CSS for styling
 
 const UserProfile = ({ accessToken }) => {
-  const [userData, setUserData] = useState(null);
-
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -16,14 +16,23 @@ const UserProfile = ({ accessToken }) => {
           }
         );
 
-        // Save user data to state
-        setUserData(response.data);
-
         // Save user data to browser storage (localStorage)
         localStorage.setItem("userData", JSON.stringify(response.data));
+
+        // Show a success toast message
+        toast.success(
+          <div>
+            <p>Welcome, {response.data.name}!</p>
+            <p>User profile loaded successfully!</p>
+          </div>,
+          { position: "bottom-right", icon: false }
+        );
       } catch (error) {
         // Handle errors
         console.error("Error fetching user profile", error);
+
+        // Show an error toast message
+        toast.error("Error fetching user profile. Please try again later.");
       }
     };
 
@@ -32,19 +41,7 @@ const UserProfile = ({ accessToken }) => {
     }
   }, [accessToken]);
 
-  return (
-    <div>
-      {userData ? (
-        <div>
-          <h2>Welcomeeeeeeeeeeee, {userData.name}</h2>
-          <p>Email: {userData.email}</p>
-          {/* Add more user details here */}
-        </div>
-      ) : (
-        <p>Loading user profile...</p>
-      )}
-    </div>
-  );
+  return null;
 };
 
 export default UserProfile;
