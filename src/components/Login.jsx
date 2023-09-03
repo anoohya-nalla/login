@@ -14,7 +14,8 @@ const Login = ({ onLogin }) => {
   const [rememberMe, setRememberMe] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
     setLoading(true);
     try {
       const response = await axios.post(
@@ -112,65 +113,67 @@ const Login = ({ onLogin }) => {
         >
           Access your math project account using the credentials emailed to you
         </Typography>
-        <TextField
-          label="Email"
-          type="text"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          label="Password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          fullWidth
-          margin="normal"
-        />
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            width: "100%",
-            marginTop: "16px",
-            marginBottom: "16px",
-          }}
-        >
-          <FormControlLabel
-            style={{ color: "#1976d2" }}
-            control={
-              <Checkbox
-                checked={rememberMe}
-                onChange={() => setRememberMe(!rememberMe)}
-              />
-            }
-            label={
-              <Typography variant="body1" style={{ fontSize: "15px" }}>
-                Remember me
-              </Typography>
-            }
+        <form onSubmit={handleLogin}>
+          <TextField
+            label="Email"
+            autoFocus={true}
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            fullWidth
+            margin="normal"
           />
-          <Link
-            href="/forgot-password"
-            variant="body2"
-            style={{ textDecoration: "none" }}
+          <TextField
+            label="Password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            fullWidth
+            margin="normal"
+          />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              width: "100%",
+              marginTop: "16px",
+              marginBottom: "16px",
+            }}
           >
-            Forgot password?
-          </Link>
-        </div>
+            <FormControlLabel
+              style={{ color: "#1976d2" }}
+              control={
+                <Checkbox
+                  checked={rememberMe}
+                  onChange={() => setRememberMe(!rememberMe)}
+                />
+              }
+              label={
+                <Typography variant="body1" style={{ fontSize: "15px" }}>
+                  Remember me
+                </Typography>
+              }
+            />
+            <Link
+              href="/forgot-password"
+              variant="body2"
+              style={{ textDecoration: "none" }}
+            >
+              Forgot password?
+            </Link>
+          </div>
 
-        <LoadingButton
-          loading={loading}
-          loadingPosition="start"
-          variant="contained"
-          color="primary"
-          onClick={handleLogin}
-          fullWidth
-        >
-          Login
-        </LoadingButton>
+          <LoadingButton
+            type="submit"
+            loading={loading}
+            variant="contained"
+            color="primary"
+            fullWidth
+          >
+            Login
+          </LoadingButton>
+        </form>
       </Grid>
     </Grid>
   );
